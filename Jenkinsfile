@@ -1,7 +1,7 @@
 node {
 
     stage('Git checkout') {
-        git credentialsId: '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' , url: 'https://github.com/nadinesaada/stationski.git'                
+        git url: 'https://github.com/nadinesaada/stationski.git'                
     }
 
     stage('sonar-scanner') {
