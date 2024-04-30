@@ -1,14 +1,40 @@
-node {
+pipeline {
+    agent any
 
-    stage('Git checkout') {
-        git url: 'https://github.com/nadinesaada/stationski.git'                
+    stages {
+        stage('Get code from GitHub') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[url: 'https://github.com/nadinesaada/stationski.git']]])
+            }
+        }
+        
+        stage('Maven compile') {
+            steps {
+                sh 'mvn clean compile'
+            }
+        }
+        
+         stage('Test unitaire') { 
+            steps {
+                sh 'mvn clean test' 
+            }
+        }
+        
+          stage('Maven Build') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+        
+           stage("SonarQube Analysis") {
+            steps {
+                script {
+                 def scannerHome = tool 'scanner'
+                 withSonarQubeEnv(installationName: 'sonarqube-installation'){
+                   sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=root'
+                 }
+                }
+            }
+        }     
     }
-
-    stage('sonar-scanner') {
-      def sonarqubeScannerHome = tool name: 'scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-      withSonarQubeEnv {
-        sh "${sonarqubeScannerHome}/bin/sonar-scanner"
-      }
-    }
-
 }
