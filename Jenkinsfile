@@ -31,7 +31,7 @@ pipeline {
                 script {
                  def scannerHome = tool 'scanner'
                  withSonarQubeEnv(installationName: 'sonarqube-installation'){
-                   sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=root'
+                   sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=sonar'
                  }
                 }
             }
