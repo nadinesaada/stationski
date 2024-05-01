@@ -26,15 +26,16 @@ pipeline {
             }
         }
         
-           stage("SonarQube Analysis") {
+          stage("SonarQube Analysis") {
             steps {
                 script {
                  def scannerHome = tool 'scanner'
-                withSonarQubeEnv(installationName: 'stationski'){
+                 withSonarQubeEnv(installationName: 'stationski'){
                    sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=sonar'
                  }
                 }
             }
+        }
         }     
     }
 }
