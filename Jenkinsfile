@@ -30,8 +30,8 @@ pipeline {
             steps {
                 script {
                  def scannerHome = tool 'scanner'
-                 withSonarQubeEnv{
-                   sh "${scannerHome}/bin/sonar-scanner"
+                withSonarQubeEnv(installationName: 'sonarqube-installation'){
+                   sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=sonar'
                  }
                 }
             }
