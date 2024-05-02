@@ -36,6 +36,20 @@ pipeline {
                 }
             }
         }
+        stage('Building Image') {
+            steps {
+                sh 'docker build -t nadinesaada/stationski .'
+            }
+        }
+        
+        stage('Push Image to DockerHub') {
+            steps {
+                script {
+                    sh("docker login -u 'nadinesaada' -p migalo1234_ ")
+                    sh('docker push nadinesaada/stationski')
+                }
+            }
+        }
         }     
     }
 
