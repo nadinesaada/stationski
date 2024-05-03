@@ -45,7 +45,7 @@ pipeline {
         stage('Push Image to DockerHub') {
             steps {
                 script {
-                    sh("docker login -u 'nadinesaada' -p migalo1234_ ")
+                    sh("docker login -u 'nadinesaada' -p nadine1234 ")
                     sh('docker push nadinesaada/stationski')
                 }
             }
